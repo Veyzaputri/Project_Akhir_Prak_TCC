@@ -31,19 +31,6 @@ export const createUser = async(req, res) =>{
     }
 }
 
-export const updateUser = async(req, res) =>{
-    try {
-        await User.update(req.body,{
-            where:{
-                id: req.params.id
-            }
-        });
-        res.status(200).json({msg:"User Updated"});
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
 export const deleteUser = async(req, res) =>{
     try {
         await User.destroy({
@@ -56,3 +43,29 @@ export const deleteUser = async(req, res) =>{
         console.log(error.message);
     }
 }
+
+export const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({
+      where: {
+        username: username,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    // Cek password (tanpa bcrypt, langsung cocokkan)
+    if (user.password !== password) {
+      return res.status(401).json({ msg: "Incorrect password" });
+    }
+
+    // Jika login sukses
+    res.status(200).json({ msg: "Login successful", user: user });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ msg: "Server error" });
+  }
+};
