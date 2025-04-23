@@ -1,8 +1,5 @@
-// src/components/LoginUser.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
-
 import { useNavigate } from "react-router-dom";
 
 function LoginUser() {
@@ -18,11 +15,14 @@ function LoginUser() {
         password
       });
 
+      // Simpan user ke localStorage
+      localStorage.setItem("user", JSON.stringify(response.data));
 
-      navigate("/add-pasien"); // misal ke dashboard setelah login
+      // Redirect ke dashboard
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
-      alert("Login failed. Please check username/password.");
+      alert("Login gagal. Silakan periksa username/password.");
     }
   };
 
@@ -71,12 +71,12 @@ function LoginUser() {
             </div>
           </form>
           <div className="has-text-centered mt-3">
-            <p>Don't have an account?</p>
+            <p>Belum punya akun?</p>
             <button 
               onClick={goToSignUp}
               className="button is-light is-rounded mt-2"
             >
-              Sign Up
+              Daftar
             </button>
           </div>
         </div>
