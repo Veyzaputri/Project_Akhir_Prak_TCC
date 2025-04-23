@@ -22,6 +22,7 @@ const Dokter = db.define('dokter', {
     freezeTableName: true,
     timestamps: false
 });
+
 export default Dokter;
 (async ()=> {
     await db.sync();

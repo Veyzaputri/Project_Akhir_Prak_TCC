@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,18 @@ const AddPasien = () => {
   const [gender, setGender] = useState("");
   const [no_telp, setTelp] = useState("");
   const [alamat, setAlamat] = useState("");
+  const [id_dokter, setIDDokter] = useState("");
+  const [list_dokter, setListDokter] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchDokter();
+  }, []);
+
+  const fetchDokter = async () => {
+    const res = await axios.get("http://localhost:5000/doctor");
+    setListDokter(res.data);
+  };
 
   const savePasien = async (e) => {
     e.preventDefault();
@@ -19,6 +30,7 @@ const AddPasien = () => {
         gender,
         no_telp,
         alamat,
+        Id_Dokter: id_dokter,
       });
       navigate("/pasien");
     } catch (error) {
@@ -96,6 +108,28 @@ const AddPasien = () => {
                   placeholder="Alamat Pasien"
                 ></textarea>
               </div>
+            </div>
+
+            <div className="field">
+            <label className="label">Dokter</label>
+            <div className="control">
+            <div className="select is-fullwidth">
+            <select
+              className="form-select"
+              value={id_dokter}
+              onChange={(e) => setIDDokter(e.target.value)}
+              required
+            >
+              <option value="">Pilih Dokter</option>
+              {list_dokter.map((dokter) => (
+                <option key={dokter.Id_Dokter} value={dokter.Id_Dokter}>
+                  {dokter.nama_dokter} - {dokter.spesialis}
+                </option>
+              ))}
+            </select>
+                </div>
+            </div>
+            
             </div>
 
             <div className="field has-text-centered">
