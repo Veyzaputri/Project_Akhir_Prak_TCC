@@ -19,8 +19,8 @@ function App() {
         <Route path="/users" element={<UserList />} />
         <Route path="/pasien" element={<PasienList />} />
         <Route path="/add-pasien" element={<AddPasien />} />
-        <Route path="/edit-pasien/:id" element={<EditPasien />} />
-        <Route path="/periksa/:id" element={<PeriksaPasien />} />
+        <Route path="/pasien/edit/:id" element={<EditPasien />} />
+        <Route path="/pasien/periksa/:id" element={<PeriksaPasien />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
