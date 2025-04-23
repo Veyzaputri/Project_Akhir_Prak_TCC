@@ -1,6 +1,5 @@
 import { where } from "sequelize";
 import User from "../models/UserModel.js";
-
 export const getUsers = async(req, res) =>{
     try {
         const response = await User.findAll();
@@ -69,3 +68,4 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
+

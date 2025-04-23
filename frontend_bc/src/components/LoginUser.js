@@ -19,7 +19,7 @@ function LoginUser() {
       });
 
 
-      navigate("/dashboard"); // misal ke dashboard setelah login
+      navigate("/add-pasien"); // misal ke dashboard setelah login
     } catch (error) {
       console.log(error);
       alert("Login failed. Please check username/password.");

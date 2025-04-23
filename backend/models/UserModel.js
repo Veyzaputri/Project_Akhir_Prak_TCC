@@ -8,7 +8,8 @@ const User = db.define('users',{
     password : DataTypes.STRING,
 
 },{
-    freezeTableName:true
+    freezeTableName:true,
+    timestamps:false
 });
 
 export default User;
