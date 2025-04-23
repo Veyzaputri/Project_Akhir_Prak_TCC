@@ -1,5 +1,6 @@
 import { where } from "sequelize";
 import Dokter from "../models/DokterModel.js";
+
 export const getDokter = async (req, res) => {
     try {
         const response = await Dokter.findAll();

@@ -7,6 +7,7 @@ import UserList from "./components/UserList";
 import PasienList from "./components/PasienList";
 import AddPasien from "./components/AddPasien";
 import EditPasien from "./components/EditPasien";
+import PeriksaPasien from "./components/PeriksaPasien";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/pasien" element={<PasienList />} />
         <Route path="/add-pasien" element={<AddPasien />} />
         <Route path="/edit-pasien/:id" element={<EditPasien />} />
+        <Route path="/periksa/:id" element={<PeriksaPasien />} />
       </Routes>
     </BrowserRouter>
   );

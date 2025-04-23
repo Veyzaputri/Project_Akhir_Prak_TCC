@@ -11,9 +11,6 @@ import {
 
 const router = express.Router();
 
-// ==============================
-//            PASIEN
-// ==============================
 router.get("/pasien", getPasien);
 router.get("/pasien/:id", getPasienById);
 router.post("/add-pasien", createPasien);

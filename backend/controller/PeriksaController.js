@@ -29,13 +29,15 @@ export const getPeriksaById = async (req, res) => {
 
 export const createPeriksa = async (req, res) => {
     try {
-        const inputResult = req.body;
-        await Periksa.create(inputResult);
-        res.status(201).json({ msg: "Checkup created" });
+      const periksa = await Periksa.create(req.body);
+      res.status(201).json({
+        message: "Pemeriksaan berhasil ditambahkan",
+        id_periksa: periksa.id_periksa
+      });
     } catch (error) {
-        console.log(error.message);
+      res.status(500).json({ message: error.message });
     }
-}
+}  
 
 export const updatePeriksa = async (req, res) => {
     try {

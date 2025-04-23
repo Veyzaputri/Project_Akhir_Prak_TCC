@@ -42,7 +42,7 @@ const PasienList = () => {
               <th>Jenis Kelamin</th>
               <th>No. Telepon</th>
               <th>Alamat</th>
-              <th style={{ width: "180px" }}>Aksi</th>
+              <th style={{ width: "220px" }}>Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -62,11 +62,17 @@ const PasienList = () => {
                     >
                       Edit
                     </Link>
+                    <Link
+                      to={`periksa/${item.id}`}
+                      className="button is-small is-warning"
+                    >
+                      Periksa
+                    </Link>
                     <button
                       onClick={() => deletePasien(item.id)}
                       className="button is-small is-danger"
                     >
-                      Hapus
+                      Done
                     </button>
                   </div>
                 </td>
