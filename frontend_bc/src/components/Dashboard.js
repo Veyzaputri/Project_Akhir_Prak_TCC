@@ -114,7 +114,7 @@ export default function Dashboard() {
                         </div>
                         <div className="column is-narrow is-flex is-align-items-center">
                             <MapPinIcon style={{ height: "1.25em", width: "1.25em", color: "black" }} />
-                            <span className="ml-2 is-size-6">Jl. Sehat No.10, Jakarta</span>
+                            <span className="ml-2 is-size-6">Jalan Kaliurang KM. 17, Pakem, Sleman, Daerah Istimewa Yogyakarta, Indonesia 55582</span>
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@ export default function Dashboard() {
                 <h2 className="title is-5 has-text-link">Lokasi Kami</h2>
                 <div className="box">
                     <iframe
-                        src="https://www.google.com/maps/embed?...etc..."
+                        src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d15816.50510452743!2d110.418103!3d-7.669571!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zN8KwNDAnMTAuNSJTIDExMMKwMjUnMDUuMiJF!5e0!3m2!1sen!2sus!4v1745442777844!5m2!1sen!2sus"
                         width="100%"
                         height="300"
                         style={{ border: 0 }}
