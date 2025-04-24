@@ -47,7 +47,10 @@ export default function Dashboard() {
                     {["Dokter", "Pasien", "History Pasien"].map((item) => (
                         <a
                             key={item}
-                            onClick={() => navigate(`/${item.toLowerCase().replace(" ", "")}`)}
+                            onClick={() => {
+                                const path = item === "Dokter" ? "/doctor" : `/${item.toLowerCase().replace(" ", "")}`;
+                                navigate(path);
+                            }}
                             className="navbar-item is-size-6 has-text-grey-dark"
                             style={{ cursor: "pointer" }}
                         >
@@ -116,9 +119,14 @@ export default function Dashboard() {
                             <MapPinIcon style={{ height: "1.25em", width: "1.25em", color: "black" }} />
                             <span className="ml-2 is-size-6">Jalan Kaliurang KM. 17, Pakem, Sleman, Daerah Istimewa Yogyakarta, Indonesia 55582</span>
                         </div>
+                        <div className="column is-narrow is-flex is-align-items-center">
+                            <i className="fas fa-envelope" style={{ height: "1.25em", width: "1.25em", color: "black" }}></i>
+                            <span className="ml-2 is-size-6">contact@harmonisejahtera.com</span>
+                        </div>
                     </div>
                 </div>
             </section>
+
 
             {/* Main Section */}
             <section className="section">
