@@ -21,7 +21,7 @@ function App() {
         <Route path="/register" element={<AddUser />} />
         <Route path="/users" element={<UserList />} />
         <Route path="/pasien" element={<PasienList />} />
-        <Route path="/add-pasien" element={<AddPasien />} />
+        <Route path="/pasien/add" element={<AddPasien />} />
         <Route path="/pasien/edit/:id" element={<EditPasien />} />
         <Route path="/pasien/periksa/:id" element={<PeriksaPasien />} />
         <Route path="/dashboard" element={<Dashboard />} />
