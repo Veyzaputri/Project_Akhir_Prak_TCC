@@ -44,7 +44,7 @@ export default function Dashboard() {
                     </a>
                 </div>
                 <div className="navbar-end">
-                    {["Dokter", "Pasien", "History Pasien"].map((item) => (
+                    {["Dokter", "Obat", "Pasien", "History Pasien"].map((item) => (
                         <a
                             key={item}
                             onClick={() => {
