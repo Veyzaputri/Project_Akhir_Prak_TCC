@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import { PhoneIcon, MapPinIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
 export default function Dashboard() {
     const navigate = useNavigate();
@@ -120,7 +120,7 @@ export default function Dashboard() {
                             <span className="ml-2 is-size-6">Jalan Kaliurang KM. 17, Pakem, Sleman, Daerah Istimewa Yogyakarta, Indonesia 55582</span>
                         </div>
                         <div className="column is-narrow is-flex is-align-items-center">
-                            <i className="fas fa-envelope" style={{ height: "1.25em", width: "1.25em", color: "black" }}></i>
+                            <EnvelopeIcon style={{ height: "1.25em", width: "1.25em", color: "black" }} />
                             <span className="ml-2 is-size-6">contact@harmonisejahtera.com</span>
                         </div>
                     </div>
