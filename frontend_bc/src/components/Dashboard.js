@@ -38,7 +38,7 @@ export default function Dashboard() {
             {/* Navbar */}
             <header className="navbar is-white is-fixed-top px-5" aria-label="Main Navigation">
                 <div className="navbar-brand">
-                    <a className="navbar-item" href="/">
+                    <a className="navbar-item" href="#">
                         <img src="/logo-rsj.png" alt="Logo RSJ" style={{ height: "100px" }} />
                         <span className="ml-2 has-text-weight-bold has-text-link">Harmoni Sejahtera</span>
                     </a>
