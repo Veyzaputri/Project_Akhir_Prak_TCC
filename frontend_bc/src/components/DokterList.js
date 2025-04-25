@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PencilIcon, TrashIcon, PlusIcon, HomeIcon } from "@heroicons/react/24/outline";
+import ModalAdd from "./ModalAdd";
+import ModalEdit from "./ModalEdit";
+import ModalHapus from "./ModalHapus";
 
 const DokterList = () => {
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
+    const [isAddOpen, setIsAddOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isHapusOpen, setIsHapusOpen] = useState(false);
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
 
     useEffect(() => {
         const fetchDoctors = async () => {
@@ -20,35 +27,82 @@ const DokterList = () => {
         fetchDoctors();
     }, []);
 
-    const navigateToAddDokter = () => {
-        navigate("/dokter/add");
-    };
-
     const navigateToDashboard = () => {
         navigate("/dashboard");
     };
 
-    const handleEdit = (id_dokter) => {
-        navigate(`/dokter/edit/${id_dokter}`);
+    const handleEdit = (doctor) => {
+        setSelectedDoctor(doctor);
+        setIsEditOpen(true);
     };
 
-    const handleDelete = async (id_dokter) => {
-        const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus dokter ini?");
-        if (confirmDelete) {
-            try {
-                const response = await fetch(`http://localhost:5000/dokter/${id_dokter}`, {
-                    method: "DELETE",
-                });
+    const handleDelete = (doctor) => {
+        setSelectedDoctor(doctor);
+        setIsHapusOpen(true);
+    };
 
-                if (response.ok) {
-                    const updatedDoctors = doctors.filter((doctor) => doctor.id_dokter !== id_dokter);
-                    setDoctors(updatedDoctors);
-                } else {
-                    console.error("Gagal menghapus dokter dari server");
-                }
-            } catch (error) {
-                console.error("Error saat menghapus dokter:", error);
+    const handleAdd = async (formData) => {
+        try {
+            const response = await fetch("http://localhost:5000/add-doctor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const newDoctor = await response.json();
+                setDoctors([...doctors, newDoctor]);
+                setIsAddOpen(false);
+            } else {
+                console.error("Gagal menambahkan dokter");
             }
+        } catch (error) {
+            console.error("Error saat menambahkan dokter:", error);
+        }
+    };
+
+    const handleSave = async (formData) => {
+        try {
+            const response = await fetch(`http://localhost:5000/dokter/${selectedDoctor.id_dokter}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const updatedDoctor = await response.json();
+                setDoctors(
+                    doctors.map((doctor) =>
+                        doctor.id_dokter === updatedDoctor.id_dokter ? updatedDoctor : doctor
+                    )
+                );
+                setIsEditOpen(false);
+            } else {
+                console.error("Gagal memperbarui dokter");
+            }
+        } catch (error) {
+            console.error("Error saat mengedit dokter:", error);
+        }
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/dokter/${selectedDoctor.id_dokter}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                setDoctors(doctors.filter((doctor) => doctor.id_dokter !== selectedDoctor.id_dokter));
+                setIsHapusOpen(false);
+            } else {
+                console.error("Gagal menghapus dokter");
+            }
+        } catch (error) {
+            console.error("Error saat menghapus dokter:", error);
         }
     };
 
@@ -69,7 +123,7 @@ const DokterList = () => {
                 </div>
                 <div className="level-right">
                     <button
-                        onClick={navigateToAddDokter}
+                        onClick={() => setIsAddOpen(true)}
                         className="button is-primary is-flex is-align-items-center"
                     >
                         <span className="icon is-small">
@@ -99,7 +153,7 @@ const DokterList = () => {
                                     <td>{doctor.spesialis}</td>
                                     <td className="has-text-centered">
                                         <button
-                                            onClick={() => handleEdit(doctor.id_dokter)}
+                                            onClick={() => handleEdit(doctor)}
                                             className="button is-small is-info mr-2"
                                             title="Edit"
                                         >
@@ -108,7 +162,7 @@ const DokterList = () => {
                                             </span>
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(doctor.id_dokter)}
+                                            onClick={() => handleDelete(doctor)}
                                             className="button is-small is-danger"
                                             title="Hapus"
                                         >
@@ -129,6 +183,16 @@ const DokterList = () => {
                     </tbody>
                 </table>
             </div>
+
+            {/* Modal Components */}
+            <ModalAdd isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} onAdd={handleAdd} />
+            <ModalEdit isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} dokter={selectedDoctor} onSave={handleSave} />
+            <ModalHapus
+                isOpen={isHapusOpen}
+                onClose={() => setIsHapusOpen(false)}
+                onConfirm={handleConfirmDelete}
+                nama={selectedDoctor?.nama_dokter}
+            />
         </div>
     );
 };
