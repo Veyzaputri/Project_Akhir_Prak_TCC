@@ -10,8 +10,6 @@ import EditPasien from "./components/EditPasien";
 import PeriksaPasien from "./components/PeriksaPasien";
 import Dashboard from "./components/Dashboard";
 import DokterList from "./components/DokterList";
-import AddDokter from "./components/AddDokter";
-import EditDokter from "./components/EditDokter";
 
 function App() {
   return (
@@ -26,8 +24,6 @@ function App() {
         <Route path="/pasien/periksa/:id" element={<PeriksaPasien />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/doctor" element={<DokterList />} />
-        <Route path="/dokter/add" element={<AddDokter />} />
-        <Route path="/dokter/edit/:id_dokter" element={<EditDokter />} />
         <Route path="*" element={<h1>404 - Halaman tidak ditemukan</h1>} />
       </Routes>
     </BrowserRouter>
