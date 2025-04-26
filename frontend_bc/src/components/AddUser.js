@@ -70,4 +70,4 @@ function AddUser() {
   )
 }
 
-export default AddUser
+export default AddUser;

@@ -94,8 +94,5 @@ const AddObat = ({ isOpen, onClose, onAdd }) => {
     );
 };
 
-<<<<<<< HEAD
 export default AddObat;
-=======
-export default AddObat;
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960
+

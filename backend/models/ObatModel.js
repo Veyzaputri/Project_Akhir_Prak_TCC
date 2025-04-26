@@ -34,8 +34,4 @@ const Obat = db.define("obat", {
 export default Obat;
 (async () => {
   await db.sync();
-<<<<<<< HEAD
 })();
-=======
-})();
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960

@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PencilIcon, TrashIcon, PlusIcon, HomeIcon } from "@heroicons/react/24/outline";
-<<<<<<< HEAD
 import EditDokter from "./EditDokter";
 import HapusDokter from "./HapusDokter";
 import AddDokter from "./AddDokter";
-=======
-import ModalAdd from "./ModalAdd";
-import ModalEdit from "./ModalEdit";
-import ModalHapus from "./ModalHapus";
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960
 
 const DokterList = () => {
     const navigate = useNavigate();
@@ -191,15 +185,9 @@ const DokterList = () => {
             </div>
 
             {/* Modal Components */}
-<<<<<<< HEAD
             <AddDokter isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} onAdd={handleAdd} />
             <EditDokter isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} dokter={selectedDoctor} onSave={handleSave} />
             <HapusDokter
-=======
-            <ModalAdd isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} onAdd={handleAdd} />
-            <ModalEdit isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} dokter={selectedDoctor} onSave={handleSave} />
-            <ModalHapus
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960
                 isOpen={isHapusOpen}
                 onClose={() => setIsHapusOpen(false)}
                 onConfirm={handleConfirmDelete}
@@ -209,8 +197,4 @@ const DokterList = () => {
     );
 };
 
-<<<<<<< HEAD
 export default DokterList;
-=======
-export default DokterList;
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960

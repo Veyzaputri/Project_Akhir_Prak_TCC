@@ -104,8 +104,4 @@ const EditObat = ({ isOpen, onClose, onSave, obat }) => {
     );
 };
 
-<<<<<<< HEAD
 export default EditObat;
-=======
-export default EditObat;
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960

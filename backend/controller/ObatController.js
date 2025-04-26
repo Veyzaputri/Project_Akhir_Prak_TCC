@@ -65,8 +65,4 @@ export const deleteObat = async (req, res) => {
         console.log(error.message);
         res.status(500).json({ msg: "Terjadi kesalahan server" });
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960

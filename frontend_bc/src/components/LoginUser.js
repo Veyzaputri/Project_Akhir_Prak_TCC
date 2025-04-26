@@ -16,17 +16,11 @@ function LoginUser() {
         password
       });
 
-<<<<<<< HEAD
-      localStorage.setItem("user", JSON.stringify(response.data));
-      console.log("Login Berhasil:");
-      navigate("/dashboard"); // misal ke dashboard setelah login
-=======
       // Simpan user ke localStorage
       localStorage.setItem("user", JSON.stringify(response.data));
 
       // Redirect ke dashboard
       navigate("/dashboard");
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960
     } catch (error) {
       console.log(error);
       alert("Login gagal. Silakan periksa username/password.");
