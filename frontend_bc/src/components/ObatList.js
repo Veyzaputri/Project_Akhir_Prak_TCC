@@ -203,4 +203,8 @@ const ObatList = () => {
     );
 };
 
+<<<<<<< HEAD
 export default ObatList;
+=======
+export default ObatList;
+>>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960

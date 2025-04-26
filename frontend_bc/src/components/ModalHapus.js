@@ -1,6 +1,6 @@
 import React from "react";
 
-const HapusObat = ({ isOpen, onClose, onConfirm, nama }) => {
+const ModalHapus = ({ isOpen, onClose, onConfirm, nama }) => {
     if (!isOpen) return null;
 
     return (
@@ -12,7 +12,7 @@ const HapusObat = ({ isOpen, onClose, onConfirm, nama }) => {
                     <button className="delete" aria-label="close" onClick={onClose}></button>
                 </header>
                 <section className="modal-card-body">
-                    <p>Apakah kamu yakin ingin menghapus <strong>{nama}</strong> dari daftar obat?</p>
+                    <p>Apakah kamu yakin ingin menghapus <strong>{nama}</strong> dari daftar dokter?</p>
                 </section>
                 <footer className="modal-card-foot">
                     <button className="button is-danger mr-2" onClick={onConfirm}>Ya, Hapus</button>
@@ -23,8 +23,4 @@ const HapusObat = ({ isOpen, onClose, onConfirm, nama }) => {
     );
 };
 
-<<<<<<< HEAD
-export default HapusObat;
-=======
-export default HapusObat;
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960
+export default ModalHapus;

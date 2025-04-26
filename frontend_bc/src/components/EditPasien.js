@@ -8,24 +8,20 @@ const EditPasien = () => {
   const [gender, setGender] = useState("");
   const [no_telp, setTelp] = useState("");
   const [alamat, setAlamat] = useState("");
+  const [id_dokter, setIDDokter] = useState("");
+  const [list_dokter, setListDokter] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     getPasienById();
+    fetchDokter();
   }, []);
 
-  const updatePasien = async (e) => {
-    e.preventDefault();
+  const fetchDokter = async () => {
     try {
-      await axios.put(`http://localhost:5000/pasien/${id}`, {
-        nama,
-        tgl_lahir,
-        gender,
-        no_telp,
-        alamat,
-      });
-      navigate("/");
+      const res = await axios.get("http://localhost:5000/doctor");
+      setListDokter(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +35,24 @@ const EditPasien = () => {
       setGender(response.data.gender);
       setTelp(response.data.no_telp);
       setAlamat(response.data.alamat);
+      setIDDokter(response.data.Id_Dokter); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updatePasien = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:5000/pasien/${id}`, {
+        nama,
+        tgl_lahir,
+        gender,
+        no_telp,
+        alamat,
+        Id_Dokter: id_dokter, 
+      });
+      navigate("/pasien");
     } catch (error) {
       console.log(error);
     }
@@ -113,6 +127,25 @@ const EditPasien = () => {
                   onChange={(e) => setAlamat(e.target.value)}
                   placeholder="Alamat Pasien"
                 ></textarea>
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">Dokter</label>
+              <div className="control">
+                <div className="select is-fullwidth">
+                  <select
+                    value={id_dokter}
+                    onChange={(e) => setIDDokter(e.target.value)}
+                  >
+                    <option value="">Pilih Dokter</option>
+                    {list_dokter.map((dokter) => (
+                      <option key={dokter.Id_Dokter} value={dokter.Id_Dokter}>
+                        {dokter.nama_dokter} - {dokter.spesialis}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 

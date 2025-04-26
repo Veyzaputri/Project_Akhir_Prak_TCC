@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 
-const AddObat = ({ isOpen, onClose, onAdd }) => {
+const ModalAdd = ({ isOpen, onClose, onAdd }) => {
     const [formData, setFormData] = useState({
-        nama_obat: "",
-        definisi: "",
-        efek_samping: "",
-        harga: "",
+        nama_dokter: "",
+        spesialis: "",
     });
 
     const handleChange = (e) => {
@@ -16,7 +14,7 @@ const AddObat = ({ isOpen, onClose, onAdd }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         onAdd(formData);
-        setFormData({ nama_obat: "", definisi: "", efek_samping: "", harga: "" }); // reset form
+        setFormData({ nama_dokter: "", spesialis: "" }); // reset form
     };
 
     if (!isOpen) return null;
@@ -26,58 +24,32 @@ const AddObat = ({ isOpen, onClose, onAdd }) => {
             <div className="modal-background" onClick={onClose}></div>
             <div className="modal-card">
                 <header className="modal-card-head has-background-primary-light">
-                    <p className="modal-card-title has-text-primary-dark">Tambah Obat</p>
+                    <p className="modal-card-title has-text-primary-dark">Tambah Dokter</p>
                     <button className="delete" aria-label="close" onClick={onClose}></button>
                 </header>
                 <form onSubmit={handleSubmit}>
                     <section className="modal-card-body">
                         <div className="field mb-3">
-                            <label className="label">Nama Obat</label>
+                            <label className="label">Nama Dokter</label>
                             <div className="control">
                                 <input
                                     type="text"
-                                    name="nama_obat"
+                                    name="nama_dokter"
                                     className="input"
-                                    value={formData.nama_obat}
+                                    value={formData.nama_dokter}
                                     onChange={handleChange}
                                     required
                                 />
                             </div>
                         </div>
                         <div className="field mb-3">
-                            <label className="label">Definisi</label>
+                            <label className="label">Spesialis</label>
                             <div className="control">
                                 <input
                                     type="text"
-                                    name="definisi"
+                                    name="spesialis"
                                     className="input"
-                                    value={formData.definisi}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="field mb-3">
-                            <label className="label">Efek Samping</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    name="efek_samping"
-                                    className="input"
-                                    value={formData.efek_samping}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="field mb-3">
-                            <label className="label">Harga</label>
-                            <div className="control">
-                                <input
-                                    type="number"
-                                    name="harga"
-                                    className="input"
-                                    value={formData.harga}
+                                    value={formData.spesialis}
                                     onChange={handleChange}
                                     required
                                 />
@@ -94,8 +66,4 @@ const AddObat = ({ isOpen, onClose, onAdd }) => {
     );
 };
 
-<<<<<<< HEAD
-export default AddObat;
-=======
-export default AddObat;
->>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960
+export default ModalAdd;

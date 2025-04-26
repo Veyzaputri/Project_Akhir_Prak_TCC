@@ -4,7 +4,11 @@ import UserRoute from "./routes/UserRoute.js";
 import PasienRoute from "./routes/PasienRoute.js";
 import DokterRoute from "./routes/DokterRoute.js";
 import PeriksaRoute from "./routes/PeriksaRoute.js";
+<<<<<<< HEAD
 import ObatRoute from "./routes/ObatRoute.js"
+=======
+import ObatRoute from "./routes/ObatRoute.js";
+>>>>>>> 73d4460f2b743fe6fdd8d0b715f41ff55ade6960
 
 const app = express();
 app.use(cors());
