@@ -17,8 +17,12 @@ const AddPasien = () => {
   }, []);
 
   const fetchDokter = async () => {
-    const res = await axios.get("http://localhost:5000/doctor");
-    setListDokter(res.data);
+    try {
+      const res = await axios.get("http://localhost:5000/doctor");
+      setListDokter(res.data);
+    } catch (error) {
+      console.error("Error fetching doctors:", error);
+    }
   };
 
   const savePasien = async (e) => {
@@ -30,11 +34,11 @@ const AddPasien = () => {
         gender,
         no_telp,
         alamat,
-        Id_Dokter: id_dokter,
+        id_dokter: parseInt(id_dokter),
       });
       navigate("/pasien");
     } catch (error) {
-      console.log(error);
+      console.error("Error saving patient data:", error);
     }
   };
 
@@ -53,6 +57,7 @@ const AddPasien = () => {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                   placeholder="Nama Pasien"
+                  required
                 />
               </div>
             </div>
@@ -65,6 +70,7 @@ const AddPasien = () => {
                   className="input"
                   value={tgl_lahir}
                   onChange={(e) => setTgl_lahir(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -76,6 +82,7 @@ const AddPasien = () => {
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
+                    required
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="Laki-laki">Laki-laki</option>
@@ -94,6 +101,7 @@ const AddPasien = () => {
                   value={no_telp}
                   onChange={(e) => setTelp(e.target.value)}
                   placeholder="Nomor Telepon Pasien"
+                  required
                 />
               </div>
             </div>
@@ -106,30 +114,29 @@ const AddPasien = () => {
                   value={alamat}
                   onChange={(e) => setAlamat(e.target.value)}
                   placeholder="Alamat Pasien"
+                  required
                 ></textarea>
               </div>
             </div>
 
             <div className="field">
-            <label className="label">Dokter</label>
-            <div className="control">
-            <div className="select is-fullwidth">
-            <select
-              className="form-select"
-              value={id_dokter}
-              onChange={(e) => setIDDokter(e.target.value)}
-              required
-            >
-              <option value="">Pilih Dokter</option>
-              {list_dokter.map((dokter) => (
-                <option key={dokter.Id_Dokter} value={dokter.Id_Dokter}>
-                  {dokter.nama_dokter} - {dokter.spesialis}
-                </option>
-              ))}
-            </select>
+              <label className="label">Dokter</label>
+              <div className="control">
+                <div className="select is-fullwidth">
+                  <select
+                    value={id_dokter}
+                    onChange={(e) => setIDDokter(e.target.value)}
+                    required
+                  >
+                    <option value="">Pilih Dokter</option>
+                    {list_dokter.map((dokter) => (
+                      <option key={dokter.id_dokter} value={dokter.id_dokter}>
+                        {dokter.nama_dokter} - {dokter.spesialis}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-            </div>
-            
+              </div>
             </div>
 
             <div className="field has-text-centered">

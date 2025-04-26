@@ -4,15 +4,26 @@ import { Link } from "react-router-dom";
 
 const PasienList = () => {
   const [pasien, setPasien] = useState([]);
+  const [dokterList, setDokterList] = useState([]);
 
   useEffect(() => {
     getPasien();
+    getDokter();
   }, []);
 
   const getPasien = async () => {
     try {
       const response = await axios.get("http://localhost:5000/pasien");
       setPasien(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDokter = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/dokter");
+      setDokterList(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -25,6 +36,11 @@ const PasienList = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const findDokterName = (idDokter) => {
+    const dokter = dokterList.find((d) => d.id_dokter === idDokter);
+    return dokter ? dokter.nama_dokter : "-";
   };
 
   return (
@@ -42,6 +58,7 @@ const PasienList = () => {
               <th>Jenis Kelamin</th>
               <th>No. Telepon</th>
               <th>Alamat</th>
+              <th>Nama Dokter</th>
               <th style={{ width: "180px" }}>Aksi</th>
             </tr>
           </thead>
@@ -54,6 +71,7 @@ const PasienList = () => {
                 <td>{item.gender}</td>
                 <td>{item.no_telp}</td>
                 <td>{item.alamat}</td>
+                <td>{item.dokter?.nama_dokter || '-'}</td>
                 <td>
                   <div className="buttons">
                     <Link

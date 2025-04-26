@@ -10,6 +10,7 @@ function LoginUser() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+
   const loginUser = async (e) => {
     e.preventDefault();
     try {
@@ -18,8 +19,9 @@ function LoginUser() {
         password
       });
 
-
-      navigate("/add-pasien"); // misal ke dashboard setelah login
+      localStorage.setItem("user", JSON.stringify(response.data));
+      console.log("Login Berhasil:");
+      navigate("/dashboard"); // misal ke dashboard setelah login
     } catch (error) {
       console.log(error);
       alert("Login failed. Please check username/password.");

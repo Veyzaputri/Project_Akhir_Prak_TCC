@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
 
+
 const {DataTypes} = Sequelize;
 
 const Dokter = db.define('dokter', {
@@ -22,6 +23,8 @@ const Dokter = db.define('dokter', {
     freezeTableName: true,
     timestamps: false
 });
+
+
 
 export default Dokter;
 (async ()=> {
