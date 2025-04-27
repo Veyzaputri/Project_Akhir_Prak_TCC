@@ -36,7 +36,7 @@ const EditPasien = () => {
       setGender(response.data.gender);
       setTelp(response.data.no_telp);
       setAlamat(response.data.alamat);
-      setIDDokter(response.data.Id_Dokter); 
+      setIDDokter(response.data.id_dokter); 
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +51,7 @@ const EditPasien = () => {
         gender,
         no_telp,
         alamat,
-        Id_Dokter: id_dokter, 
+        id_dokter, 
       });
       navigate("/pasien");
     } catch (error) {
@@ -141,7 +141,7 @@ const EditPasien = () => {
                   >
                     <option value="">Pilih Dokter</option>
                     {list_dokter.map((dokter) => (
-                      <option key={dokter.Id_Dokter} value={dokter.Id_Dokter}>
+                      <option key={dokter.id_dokter} value={dokter.id_dokter}>
                         {dokter.nama_dokter} - {dokter.spesialis}
                       </option>
                     ))}
