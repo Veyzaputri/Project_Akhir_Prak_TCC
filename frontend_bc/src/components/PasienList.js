@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faNotesMedical, faPen, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const PasienList = () => {
   const [pasien, setPasien] = useState([]);
@@ -75,16 +77,25 @@ const PasienList = () => {
                 <td>
                   <div className="buttons">
                     <Link
+                      to={`periksa/${item.id}`}
+                      className="button is-small is-primary"
+                      title="Periksa"
+                    >
+                      <FontAwesomeIcon icon={faNotesMedical} />
+                    </Link>
+                    <Link
                       to={`edit/${item.id}`}
                       className="button is-small is-info"
+                      title="Edit"
                     >
-                      Edit
+                      <FontAwesomeIcon icon={faPen} />
                     </Link>
                     <button
                       onClick={() => deletePasien(item.id)}
                       className="button is-small is-danger"
+                      title="Selesai"
                     >
-                      Hapus
+                      <FontAwesomeIcon icon={faCheck} />
                     </button>
                   </div>
                 </td>

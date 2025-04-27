@@ -32,6 +32,13 @@ const PeriksaPasien = () => {
 
   const savePeriksa = async (e) => {
     e.preventDefault();
+
+    // Validasi
+    if (!tanggal_periksa || !biaya_periksa || !obatId) {
+      alert("Semua field harus diisi!");
+      return;
+    }
+
     try {
       const res = await axios.post("http://localhost:5000/add-periksa", {
         tanggal_periksa,
@@ -39,10 +46,12 @@ const PeriksaPasien = () => {
         pasienId: id,
         obatId,
       });
-      const id_periksa = res.data.id_periksa;  
-      navigate(`/struk/${id_periksa}`);
+      
+      // Ambil ID struk dari response dan arahkan ke halaman struk
+      const id_struk = res.data.id_struk;  
+      navigate(`/pasien/periksa/struk/${id_struk}`);
     } catch (error) {
-      console.log(error);
+      console.log("Error:", error);
     }
   };
 
@@ -58,7 +67,7 @@ const PeriksaPasien = () => {
                 <input
                   type="text"
                   className="input"
-                  value={pasien.nama}
+                  value={pasien?.nama || ""}  // Safe value with default ""
                   disabled
                 />
               </div>
@@ -81,7 +90,7 @@ const PeriksaPasien = () => {
               <label className="label">Biaya Periksa</label>
               <div className="control">
                 <input
-                  type="text"
+                  type="number"  // Use number input type for biaya
                   className="input"
                   value={biaya_periksa}
                   onChange={(e) => setBiayaPeriksa(e.target.value)}

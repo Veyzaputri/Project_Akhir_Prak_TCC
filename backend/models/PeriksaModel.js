@@ -5,7 +5,7 @@ import Obat from "./ObatModel.js";
 
 const { DataTypes } = Sequelize;
 
-const Periksa = db.define('periksa', {
+const Periksa = db.define("periksa", {
   id_periksa: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -17,25 +17,27 @@ const Periksa = db.define('periksa', {
     defaultValue: Sequelize.NOW
   },
   biaya_periksa: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   pasienId: {
     type: DataTypes.INTEGER,
+    allowNull: false,
     references: {
       model: Pasien,
-      key: 'id'
+      key: "id"
     }
   },
   obatId: {
     type: DataTypes.INTEGER,
+    allowNull: true,  // Boleh null kalau tidak wajib diisi
     references: {
       model: Obat,
-      key: 'id_obat'
+      key: "id_obat"
     }
   }
 }, {
-  tableName: 'periksa',
+  tableName: "periksa",
   freezeTableName: true,
   timestamps: false
 });
@@ -50,5 +52,5 @@ Periksa.belongsTo(Obat, { foreignKey: "obatId" });
 export default Periksa;
 
 (async () => {
-  await db.sync();
+  await db.sync({ alter: true });  
 })();

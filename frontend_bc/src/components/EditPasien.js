@@ -21,6 +21,7 @@ const EditPasien = () => {
   const fetchDokter = async () => {
     try {
       const res = await axios.get("http://localhost:5000/doctor");
+      console.log(res.data) // tambahkan ini
       setListDokter(res.data);
     } catch (error) {
       console.log(error);

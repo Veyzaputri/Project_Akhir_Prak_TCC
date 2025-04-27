@@ -6,6 +6,16 @@ GET http://localhost:5000/users/1
 
 
 ###
+POST http://localhost:5000/add-periksa
+Content-Type: application/json
+{
+  "tanggal_periksa": "2025-04-27T08:30:00",
+  "biaya_periksa": 100000,
+  "pasienId": 1,
+  "obatId": 2
+}
+
+###
 POST http://localhost:5000/users
 Content-Type: application/json
 

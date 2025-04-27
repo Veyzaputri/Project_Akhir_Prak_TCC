@@ -22,7 +22,7 @@ const Obat = db.define("obat", {
     allowNull: false
   },
   harga: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false
   }
 }, {

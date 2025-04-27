@@ -11,6 +11,7 @@ import PeriksaPasien from "./components/PeriksaPasien";
 import Dashboard from "./components/Dashboard";
 import DokterList from "./components/DokterList";
 import ObatList from "./components/ObatList";
+import Struk from "./components/Struk"; 
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/doctor" element={<DokterList />} />
         <Route path="/obat" element={<ObatList />} />
+        <Route path="/pasien/periksa/struk/:id_struk" element={<Struk />} /> 
         <Route path="*" element={<h1>404 - Halaman tidak ditemukan</h1>} />
       </Routes>
     </BrowserRouter>

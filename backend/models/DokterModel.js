@@ -24,8 +24,6 @@ const Dokter = db.define('dokter', {
     timestamps: false
 });
 
-
-
 export default Dokter;
 (async ()=> {
     await db.sync();

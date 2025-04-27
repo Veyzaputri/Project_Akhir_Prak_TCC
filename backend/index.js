@@ -5,6 +5,7 @@ import PasienRoute from "./routes/PasienRoute.js";
 import DokterRoute from "./routes/DokterRoute.js";
 import PeriksaRoute from "./routes/PeriksaRoute.js";
 import ObatRoute from "./routes/ObatRoute.js"
+import StrukRoute from "./routes/StrukRoute.js";
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(PasienRoute);
 app.use(DokterRoute);
 app.use(PeriksaRoute);
 app.use(ObatRoute);
+app.use(StrukRoute);
 
 app.get("/", async (req, res) => {
     try {
