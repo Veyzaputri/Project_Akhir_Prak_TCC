@@ -10,6 +10,7 @@ export const getPeriksa = async (req, res) => {
         res.status(200).json(response);
     } catch (error) {
         console.log(error.message);
+        res.status(500).json({ msg: "Terjadi kesalahan server" });
     }
 }
 
@@ -23,7 +24,7 @@ export const getPeriksaById = async (req, res) => {
             return res.status(404).json({ msg: "Checkup tidak ditemukan" });
         }
 
-        res.status(200).json(doctor);
+        res.status(200).json(checkup); // Menggunakan checkup bukannya doctor
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ msg: "Terjadi kesalahan server" });
@@ -63,7 +64,8 @@ export const createPeriksa = async (req, res) => {
         id_struk: struk.id_struk,
       });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        console.log(error); // Log error secara lebih rinci
+        res.status(500).json({ message: error.message });
     }
   };  
 
@@ -74,9 +76,10 @@ export const updatePeriksa = async (req, res) => {
                 id_periksa: req.params.id_periksa
             }
         });
-        res.status(200).json({ msg: "This Checkup Updated" });
+        res.status(200).json({ msg: "Pemeriksaan berhasil diperbarui" });
     } catch (error) {
         console.log(error.message);
+        res.status(500).json({ msg: "Terjadi kesalahan server" });
     }
 }
 
@@ -87,8 +90,9 @@ export const deletePeriksa = async (req, res) => {
                 id_periksa: req.params.id_periksa
             }
         });
-        res.status(200).json({ msg: "This Checkup Completed Detele" });
+        res.status(200).json({ msg: "Pemeriksaan berhasil dihapus" });
     } catch (error) {
         console.log(error.message);
+        res.status(500).json({ msg: "Terjadi kesalahan server" });
     }
 }

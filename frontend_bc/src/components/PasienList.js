@@ -97,6 +97,12 @@ const PasienList = () => {
                     >
                       <FontAwesomeIcon icon={faCheck} />
                     </button>
+                    <Link
+                      to={`periksa/${item.id}`}
+                      className="button is-small is-info"
+                    >
+                      periksa
+                    </Link>
                   </div>
                 </td>
               </tr>

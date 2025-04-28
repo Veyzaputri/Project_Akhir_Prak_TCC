@@ -50,10 +50,10 @@ const Struk = db.define("Struk", {
 });
 
 // Relasi antara Struk dan Pasien
-Struk.belongsTo(Pasien, { foreignKey: "id_pasien" });
+Struk.belongsTo(Pasien, { foreignKey: "id_pasien", as: "pasien" });
 // Relasi antara Struk dan Obat
-Struk.belongsTo(Obat, { foreignKey: "id_obat" });
+Struk.belongsTo(Obat, { foreignKey: "id_obat", as: "obat" });
 // Relasi antara Struk dan Periksa
-Struk.belongsTo(Periksa, { foreignKey: "id_periksa" });
+Struk.belongsTo(Periksa, { foreignKey: "id_periksa", as: "periksa" });
 
 export default Struk;

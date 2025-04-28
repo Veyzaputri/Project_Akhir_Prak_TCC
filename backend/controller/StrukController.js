@@ -84,13 +84,14 @@ export const createStruk = async (req, res) => {
       return res.status(404).json({ message: "Periksa not found" });
     }
 
-    const total_biaya = obat.harga + periksa.biaya_periksa;
+    const totalBiaya = parseFloat(periksa.biaya_periksa) + parseFloat(obat.harga);
+   
 
     const newStruk = await Struk.create({
       id_pasien,
       id_obat,
       id_periksa,
-      total_biaya,
+      total_biaya: totalBiaya,
     });
 
     res.status(201).json(newStruk);
