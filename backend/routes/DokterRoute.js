@@ -7,11 +7,16 @@ import {
     deleteDokter,
     
 } from "../controller/DokterController.js";
+import { refreshToken } from "../controller/RefreshToken.js";
+import { verifyToken } from "../middleware/verifyToken.js";
+
 
 const router = express.Router();
-router.get("/doctor", getDokter);
-router.get("/dokter/:id_dokter", getDokterById);
-router.post("/add-doctor", createDokter);
-router.put("/dokter/:id_dokter", updateDokter);
-router.delete("/dokter/:id_dokter", deleteDokter);
+
+router.get('/token', refreshToken);
+router.get("/doctor",verifyToken, getDokter);
+router.get("/dokter/:id_dokter",verifyToken, getDokterById);
+router.post("/add-doctor",verifyToken, createDokter);
+router.put("/dokter/:id_dokter",verifyToken, updateDokter);
+router.delete("/dokter/:id_dokter",verifyToken, deleteDokter);
 export default router;

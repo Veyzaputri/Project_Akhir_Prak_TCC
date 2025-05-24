@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { API } from "../utils";
 
 
 function AddUser() {
@@ -11,7 +12,7 @@ function AddUser() {
     const saveUser = async (e) =>{
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/users',{
+            await API.post('/register',{
                 username,
                 password,
               

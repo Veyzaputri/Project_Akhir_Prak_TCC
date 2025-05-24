@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { API } from "../utils";
 
 const EditPasien = () => {
   const [nama, setNama] = useState("");
@@ -12,6 +13,8 @@ const EditPasien = () => {
   const [list_dokter, setListDokter] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
+  const [msg, setMsg] = useState("");
+  
 
   useEffect(() => {
     getPasienById();
@@ -20,7 +23,17 @@ const EditPasien = () => {
 
   const fetchDokter = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/doctor");
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      const res = await API.get("/doctor",{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       console.log(res.data) // tambahkan ini
       setListDokter(res.data);
     } catch (error) {
@@ -30,7 +43,17 @@ const EditPasien = () => {
 
   const getPasienById = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/pasien/${id}`);
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      const response = await API.get(`/pasien/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       setNama(response.data.nama);
       setTgl_lahir(response.data.tgl_lahir);
       setGender(response.data.gender);
@@ -45,14 +68,25 @@ const EditPasien = () => {
   const updatePasien = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/pasien/${id}`, {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      await API.put(`/pasien/${id}`, {
+        
         nama,
         tgl_lahir,
         gender,
         no_telp,
         alamat,
         id_dokter, 
-      });
+      },{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
       navigate("/pasien");
     } catch (error) {
       console.log(error);

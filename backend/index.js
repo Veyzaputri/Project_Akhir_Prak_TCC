@@ -6,10 +6,16 @@ import DokterRoute from "./routes/DokterRoute.js";
 import PeriksaRoute from "./routes/PeriksaRoute.js";
 import ObatRoute from "./routes/ObatRoute.js"
 import StrukRoute from "./routes/StrukRoute.js";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+import sequelize from "./config/Database.js";
 
+dotenv.config();
 const app = express();
-app.use(cors());
-import { getUsers } from "./controller/UserController.js";
+app.use(cookieParser());
+app.use(cors({ credentials:true,origin:'http://localhost:3000', methods: ["GET", "POST", "PUT", "DELETE"], }));
+
+
 
 app.use(express.json());
 app.use(UserRoute);
@@ -19,12 +25,18 @@ app.use(PeriksaRoute);
 app.use(ObatRoute);
 app.use(StrukRoute);
 
-app.get("/", async (req, res) => {
-    try {
-        await getUsers(req, res); // Langsung panggil fungsi getUsers
-    } catch (error) {
-        res.status(500).json({ message: "Internal Server Error", error });
-    }
-});
+const start = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Database connected");
+    await sequelize.sync(); // sinkronisasi model
 
-app.listen(5000, "0.0.0.0", ()=> console.log('Server up and running...'));
+    // Menggunakan PORT dari environment atau default ke 5000
+    const port = process.env.PORT || 5000;
+    app.listen(port, '0.0.0.0',() => console.log(`Server running on port ${port}`));
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+};
+
+start();

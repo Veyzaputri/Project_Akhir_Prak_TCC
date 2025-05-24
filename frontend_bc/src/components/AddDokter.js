@@ -1,69 +1,86 @@
+// src/pages/AddDokter.js
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { API } from "../utils"; // pastikan ini mengarah ke instance axios
 
-const AddDokter = ({ isOpen, onClose, onAdd }) => {
-    const [formData, setFormData] = useState({
-        nama_dokter: "",
-        spesialis: "",
-    });
+function AddDokter() {
+    const [nama_dokter, setNamaDokter] = useState("");
+    const [spesialis, setSpesialis] = useState("");
+    const navigate = useNavigate();
+    const [msg, setMsg] = useState("");
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
+    const saveDokter = async (e) => {
         e.preventDefault();
-        onAdd(formData);
-        setFormData({ nama_dokter: "", spesialis: "" }); // reset form
-    };
+        try {
+            const token = localStorage.getItem("accessToken");
+            if (!token) {
+                setMsg("Silakan login terlebih dahulu.");
+                return;
+            }
 
-    if (!isOpen) return null;
+            await API.post(
+                "/add-doctor",
+                { nama_dokter, spesialis },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true,
+                }
+            );
+
+            navigate("/doctor"); // redirect ke halaman list dokter
+        } catch (error) {
+            console.error(error);
+            alert("Gagal menyimpan data dokter. Coba login ulang jika perlu.");
+        }
+    };
 
     return (
-        <div className="modal is-active">
-            <div className="modal-background" onClick={onClose}></div>
-            <div className="modal-card">
-                <header className="modal-card-head has-background-primary-light">
-                    <p className="modal-card-title has-text-primary-dark">Tambah Dokter</p>
-                    <button className="delete" aria-label="close" onClick={onClose}></button>
-                </header>
-                <form onSubmit={handleSubmit}>
-                    <section className="modal-card-body">
-                        <div className="field mb-3">
+        <div className="columns mt-5 is-centered">
+            <div className="column is-half">
+                <div className="box p-5">
+                    <h1 className="title has-text-centered has-text-primary">Tambah Dokter</h1>
+                    <form onSubmit={saveDokter}>
+                        <div className="field">
                             <label className="label">Nama Dokter</label>
                             <div className="control">
                                 <input
                                     type="text"
-                                    name="nama_dokter"
-                                    className="input"
-                                    value={formData.nama_dokter}
-                                    onChange={handleChange}
+                                    className="input is-medium is-rounded"
+                                    value={nama_dokter}
+                                    onChange={(e) => setNamaDokter(e.target.value)}
+                                    placeholder="Masukkan nama dokter"
                                     required
                                 />
                             </div>
                         </div>
-                        <div className="field mb-3">
+
+                        <div className="field">
                             <label className="label">Spesialis</label>
                             <div className="control">
                                 <input
                                     type="text"
-                                    name="spesialis"
-                                    className="input"
-                                    value={formData.spesialis}
-                                    onChange={handleChange}
+                                    className="input is-medium is-rounded"
+                                    value={spesialis}
+                                    onChange={(e) => setSpesialis(e.target.value)}
+                                    placeholder="Masukkan spesialis"
                                     required
                                 />
                             </div>
                         </div>
-                    </section>
-                    <footer className="modal-card-foot">
-                        <button type="submit" className="button is-primary mr-2">Tambah</button>
-                        <button type="button" className="button" onClick={onClose}>Batal</button>
-                    </footer>
-                </form>
+
+                        <div className="field has-text-centered">
+                            <button type="submit" className="button is-success is-medium is-rounded px-5">
+                                Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
-};
+}
 
 export default AddDokter;

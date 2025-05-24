@@ -96,3 +96,4 @@ export const deletePeriksa = async (req, res) => {
         res.status(500).json({ msg: "Terjadi kesalahan server" });
     }
 }
+

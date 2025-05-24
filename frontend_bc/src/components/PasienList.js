@@ -3,10 +3,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNotesMedical, faPen, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { API } from "../utils";
+
 
 const PasienList = () => {
   const [pasien, setPasien] = useState([]);
   const [dokterList, setDokterList] = useState([]);
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     getPasien();
@@ -15,7 +18,18 @@ const PasienList = () => {
 
   const getPasien = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/pasien");
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      const response = await API.get("/pasien",{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+
       setPasien(response.data);
     } catch (error) {
       console.log(error);
@@ -24,7 +38,17 @@ const PasienList = () => {
 
   const getDokter = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/dokter");
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      const response = await API.get("/doctor",{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       setDokterList(response.data);
     } catch (error) {
       console.log(error);
@@ -33,7 +57,17 @@ const PasienList = () => {
 
   const deletePasien = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/pasien/${id}`);
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      await API.delete(`/pasien/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       getPasien();
     } catch (error) {
       console.log(error);
@@ -97,12 +131,6 @@ const PasienList = () => {
                     >
                       <FontAwesomeIcon icon={faCheck} />
                     </button>
-                    <Link
-                      to={`periksa/${item.id}`}
-                      className="button is-small is-info"
-                    >
-                      periksa
-                    </Link>
                   </div>
                 </td>
               </tr>

@@ -1,77 +1,111 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { API } from "../utils";
 
-const EditDokter = ({ isOpen, onClose, onSave, dokter }) => {
-    const [formData, setFormData] = useState({
-        nama_dokter: "",
-        spesialis: "",
-    });
+function EditDokter() {
+  const [namaDokter, setNamaDokter] = useState("");
+  const [spesialis, setSpesialis] = useState("");
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [msg, setMsg] = useState("")
 
-    useEffect(() => {
-        if (dokter) {
-            setFormData({
-                nama_dokter: dokter.nama_dokter,
-                spesialis: dokter.spesialis,
-            });
+  useEffect(() => {
+    getDokterById();
+  }, []);
+
+  const getDokterById = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      const response = await API.get(`/dokter/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials:true,
+      });
+
+      setNamaDokter(response.data.nama_dokter);
+      setSpesialis(response.data.spesialis);
+    } catch (error) {
+      console.error(error);
+      alert("Gagal mengambil data dokter.");
+    }
+  };
+
+  const updateDokter = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      await API.put(
+        `/dokter/${id}`,
+        {
+          nama_dokter: namaDokter,
+          spesialis,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials:true,
         }
-    }, [dokter]);
+      );
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
+      navigate("/doctor"); // misal halaman list dokter
+    } catch (error) {
+      console.error(error);
+      alert("Gagal mengupdate data dokter. Pastikan kamu sudah login.");
+    }
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSave({ ...dokter, ...formData });
-    };
-
-    if (!isOpen || !dokter) return null;
-
-    return (
-        <div className="modal is-active">
-            <div className="modal-background" onClick={onClose}></div>
-            <div className="modal-card">
-                <header className="modal-card-head has-background-warning-light">
-                    <p className="modal-card-title has-text-dark">Edit Dokter</p>
-                    <button className="delete" aria-label="close" onClick={onClose}></button>
-                </header>
-                <form onSubmit={handleSubmit}>
-                    <section className="modal-card-body">
-                        <div className="field mb-3">
-                            <label className="label">Nama Dokter</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    name="nama_dokter"
-                                    className="input"
-                                    value={formData.nama_dokter}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="field mb-3">
-                            <label className="label">Spesialis</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    name="spesialis"
-                                    className="input"
-                                    value={formData.spesialis}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                    </section>
-                    <footer className="modal-card-foot">
-                        <button type="submit" className="button is-warning mr-2">Simpan</button>
-                        <button type="button" className="button" onClick={onClose}>Batal</button>
-                    </footer>
-                </form>
+  return (
+    <div className="columns mt-5 is-centered">
+      <div className="column is-half">
+        <div className="box p-5">
+          <h1 className="title has-text-centered has-text-info">✏️ Edit Dokter</h1>
+          <form onSubmit={updateDokter}>
+            <div className="field">
+              <label className="label">Nama Dokter</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input is-medium is-rounded"
+                  value={namaDokter}
+                  onChange={(e) => setNamaDokter(e.target.value)}
+                  placeholder="Masukkan nama dokter"
+                  required
+                />
+              </div>
             </div>
+
+            <div className="field">
+              <label className="label">Spesialis</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input is-medium is-rounded"
+                  value={spesialis}
+                  onChange={(e) => setSpesialis(e.target.value)}
+                  placeholder="Masukkan spesialis"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="field has-text-centered">
+              <button type="submit" className="button is-info is-medium is-rounded px-5">
+                Update
+              </button>
+            </div>
+          </form>
         </div>
-    );
-};
+      </div>
+    </div>
+  );
+}
 
 export default EditDokter;

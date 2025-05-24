@@ -8,13 +8,14 @@ import {
   updatePasien,
   deletePasien,
 } from "../controller/PasienController.js";
-
+import { refreshToken } from "../controller/RefreshToken.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 const router = express.Router();
-
-router.get("/pasien", getPasien);
-router.get("/pasien/:id", getPasienById);
-router.post("/add-pasien", createPasien);
-router.put("/pasien/:id", updatePasien);
-router.delete("/pasien/:id", deletePasien);
+router.get('/token', refreshToken);
+router.get("/pasien",verifyToken, getPasien);
+router.get("/pasien/:id",verifyToken, getPasienById);
+router.post("/add-pasien",verifyToken, createPasien);
+router.put("/pasien/:id",verifyToken, updatePasien);
+router.delete("/pasien/:id",verifyToken, deletePasien);
 
 export default router;

@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import db from "../config/Database.js"; 
+import db from "../config/Database.js";
 import Pasien from "./PasienModel.js";
 import Obat from "./ObatModel.js";
 import Periksa from "./PeriksaModel.js";
@@ -16,37 +16,42 @@ const Struk = db.define("Struk", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "Pasien", 
-      key: "id", 
+      model: "Pasien",
+      key: "id",
     },
-    onDelete: "CASCADE", 
+    onDelete: "CASCADE",
   },
   id_obat: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "Obat", 
-      key: "id_obat", 
+      model: "Obat",
+      key: "id_obat",
     },
-    onDelete: "CASCADE", 
+    onDelete: "CASCADE",
   },
   id_periksa: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "Periksa", 
-      key: "id_periksa", 
+      model: "Periksa",
+      key: "id_periksa",
     },
-    onDelete: "CASCADE", 
+    onDelete: "CASCADE",
   },
   total_biaya: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: "Belum",
+    allowNull: false
+  },
 }, {
-    tableName: "struk",
-    freezeTableName: true,
-    timestamps: false
+  tableName: "struk",
+  freezeTableName: true,
+  timestamps: false
 });
 
 // Relasi antara Struk dan Pasien

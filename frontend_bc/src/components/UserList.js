@@ -1,22 +1,33 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
+//import axios from "axios";
 import { Link } from "react-router-dom";
-import { BASE_URL } from "../utils";
+import { API } from "../utils";
 const UserList = () => {
 const [users, setUser] = useState([]);
+const [msg, setMsg] = useState("");
 
 useEffect(()=>{
     getUsers();
 },[]);
 
 const getUsers = async () =>{
-    const response = await axios.get(`http://localhost:5000/users`);
+    const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+    const response = await API.get(`/users`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
     setUser(response.data);
 };
 
 const deleteUser = async (id) =>{
     try {
-        await axios.delete(`http://localhost:5000/users/${id}`);
+        await API.delete(`/users/${id}`);
         getUsers();
     } catch (error) {
         console.log(error);

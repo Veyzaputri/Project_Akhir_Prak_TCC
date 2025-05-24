@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { API } from "../utils";
+
 
 const PeriksaPasien = () => {
   const [tanggal_periksa, setTanggalPeriksa] = useState("");
@@ -9,7 +11,8 @@ const PeriksaPasien = () => {
   const [listObat, setListObat] = useState([]);
   const [pasien, setPasien] = useState({});
   const navigate = useNavigate();
-  const { id } = useParams();  
+  const { id } = useParams();
+  const [msg, setMsg] = useState("");  
 
   useEffect(() => {
     fetchPasien();
@@ -18,7 +21,17 @@ const PeriksaPasien = () => {
 
   const fetchPasien = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/pasien/${id}`);
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      const res = await API.get(`/pasien/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       setPasien(res.data);
     } catch (error) {
       console.log(error);
@@ -26,7 +39,17 @@ const PeriksaPasien = () => {
   };
 
   const fetchObat = async () => {
-    const res = await axios.get("http://localhost:5000/obat");
+    const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+    const res = await API.get("/obat",{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
     setListObat(res.data);
   };
 
@@ -38,9 +61,16 @@ const PeriksaPasien = () => {
       alert("Semua field harus diisi!");
       return;
     }
+    const biayaPeriksa = parseFloat(biaya_periksa);
+    if (isNaN(biayaPeriksa)) {
+      alert("Biaya periksa harus berupa angka!");
+      return;
+    }
+  
 
     try {
-      const res = await axios.post("http://localhost:5000/add-periksa", {
+      const token = localStorage.getItem("accessToken");
+      const res = await API.post("/add-periksa", {
         tanggal_periksa,
         biaya_periksa,
         pasienId: id,
@@ -93,7 +123,7 @@ const PeriksaPasien = () => {
                   type="number"  // Use number input type for biaya
                   className="input"
                   value={biaya_periksa}
-                  onChange={(e) => setBiayaPeriksa(e.target.value)}
+                  onChange={(e) => setBiayaPeriksa(Number(e.target.value))}
                   placeholder="Masukkan biaya periksa"
                   required
                 />

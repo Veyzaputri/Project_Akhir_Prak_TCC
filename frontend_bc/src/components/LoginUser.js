@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { API } from "../utils";
 
 function LoginUser() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [msg, setMsg] = useState("");
 
 
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/login', {
+      const response = await API.post('/login', {
         username,
         password
       });
-
-      // Simpan user ke localStorage
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("accessToken", response.data.accessToken);
 
       // Redirect ke dashboard
       navigate("/dashboard");

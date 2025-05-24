@@ -1,98 +1,115 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { API } from "../utils";
 
-const AddObat = ({ isOpen, onClose, onAdd }) => {
-    const [formData, setFormData] = useState({
-        nama_obat: "",
-        definisi: "",
-        efek_samping: "",
-        harga: "",
-    });
+const AddObat = () => {
+  const [nama_obat, setNama] = useState("");
+  const [definisi, setDefinisi] = useState("");
+  const [efek_samping, setEfekSamping] = useState("");
+  const [harga, setHarga] = useState("");
+  const navigate = useNavigate();
+  const [msg, setMsg] = useState("");
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
+  const saveObat = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      await API.post(
+        "/add-obat",
+        {
+          nama_obat,
+          definisi,
+          efek_samping,
+          harga: parseInt(harga),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        },
+      );
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onAdd(formData);
-        setFormData({ nama_obat: "", definisi: "", efek_samping: "", harga: "" }); // reset form
-    };
+      navigate("/obat");
+    } catch (error) {
+      console.error("Error saving obat data:", error);
+      setMsg("Gagal menyimpan data obat.");
+    }
+  };
 
-    if (!isOpen) return null;
-
-    return (
-        <div className="modal is-active">
-            <div className="modal-background" onClick={onClose}></div>
-            <div className="modal-card">
-                <header className="modal-card-head has-background-primary-light">
-                    <p className="modal-card-title has-text-primary-dark">Tambah Obat</p>
-                    <button className="delete" aria-label="close" onClick={onClose}></button>
-                </header>
-                <form onSubmit={handleSubmit}>
-                    <section className="modal-card-body">
-                        <div className="field mb-3">
-                            <label className="label">Nama Obat</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    name="nama_obat"
-                                    className="input"
-                                    value={formData.nama_obat}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="field mb-3">
-                            <label className="label">Definisi</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    name="definisi"
-                                    className="input"
-                                    value={formData.definisi}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="field mb-3">
-                            <label className="label">Efek Samping</label>
-                            <div className="control">
-                                <input
-                                    type="text"
-                                    name="efek_samping"
-                                    className="input"
-                                    value={formData.efek_samping}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="field mb-3">
-                            <label className="label">Harga</label>
-                            <div className="control">
-                                <input
-                                    type="number"
-                                    name="harga"
-                                    className="input"
-                                    value={formData.harga}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                    </section>
-                    <footer className="modal-card-foot">
-                        <button type="submit" className="button is-primary mr-2">Tambah</button>
-                        <button type="button" className="button" onClick={onClose}>Batal</button>
-                    </footer>
-                </form>
+  return (
+    <div className="columns mt-5 is-centered">
+      <div className="column is-half">
+        <div className="box p-5">
+          <h1 className="title has-text-centered">Tambah Data Obat</h1>
+          {msg && <div className="notification is-danger">{msg}</div>}
+          <form onSubmit={saveObat}>
+            <div className="field">
+              <label className="label">Nama Obat</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input"
+                  value={nama_obat}
+                  onChange={(e) => setNama(e.target.value)}
+                  required
+                />
+              </div>
             </div>
+
+            <div className="field">
+              <label className="label">Definisi</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input"
+                  value={definisi}
+                  onChange={(e) => setDefinisi(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">Efek Samping</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input"
+                  value={efek_samping}
+                  onChange={(e) => setEfekSamping(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">Harga</label>
+              <div className="control">
+                <input
+                  type="number"
+                  className="input"
+                  value={harga}
+                  onChange={(e) => setHarga(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="field has-text-centered">
+              <button type="submit" className="button is-success is-fullwidth">
+                Simpan Data Obat
+              </button>
+            </div>
+          </form>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default AddObat;
-

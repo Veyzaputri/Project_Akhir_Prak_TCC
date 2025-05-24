@@ -7,8 +7,8 @@ export default function Dashboard() {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
-        const user = localStorage.getItem("user");
-        if (!user) {
+        const token = localStorage.getItem("accessToken");
+        if (!token) {
             navigate("/");
         }
     }, [navigate]);
@@ -29,7 +29,7 @@ export default function Dashboard() {
     ];
 
     const handleLogout = () => {
-        localStorage.removeItem("user");
+        localStorage.removeItem("accessToken");
         navigate("/");
     };
 

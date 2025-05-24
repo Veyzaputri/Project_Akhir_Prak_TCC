@@ -5,14 +5,19 @@ import {
     createStruk,
     updateStruk,
     deleteStruk,
+    getSelesaiStruks,
   } from "../controller/StrukController.js";  
+import { refreshToken } from "../controller/RefreshToken.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
+router.get('/token', refreshToken);
 
-router.get("/struk", getAllStruk); 
-router.get("/pasien/periksa/struk/:id_struk", getStrukById);
+router.get("/struk",verifyToken, getAllStruk); 
+router.get("/pasien/periksa/struk/:id_struk",verifyToken, getStrukById);
 router.post("/struk", createStruk);
-router.put("/struk/:id", updateStruk);
-router.delete("/struk/:id", deleteStruk); 
+router.put("/struk/:id",verifyToken, updateStruk);
+router.delete("/struk/:id", deleteStruk);
+router.get("/struk/selesai",verifyToken, getSelesaiStruks);
 
 export default router;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API } from "../utils";
 
 const AddPasien = () => {
   const [nama, setNama] = useState("");
@@ -11,6 +12,7 @@ const AddPasien = () => {
   const [id_dokter, setIDDokter] = useState("");
   const [list_dokter, setListDokter] = useState([]);
   const navigate = useNavigate();
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     fetchDokter();
@@ -18,7 +20,17 @@ const AddPasien = () => {
 
   const fetchDokter = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/doctor");
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      const res = await API.get("/doctor", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       setListDokter(res.data);
     } catch (error) {
       console.error("Error fetching doctors:", error);
@@ -28,13 +40,23 @@ const AddPasien = () => {
   const savePasien = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/add-pasien", {
+       const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setMsg("Silakan login terlebih dahulu.");
+        return;
+      }
+      await API.post("/add-pasien", {
         nama,
         tgl_lahir,
         gender,
         no_telp,
         alamat,
         id_dokter: parseInt(id_dokter),
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
       });
       navigate("/pasien");
     } catch (error) {
