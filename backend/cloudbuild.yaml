@@ -38,7 +38,7 @@ steps:
         "--image",
         "gcr.io/$PROJECT_ID/final-project-prak-tcc",
         "--timeout",
-        "1000s",
+        "3000s",
         "--port",
         "5000",
         "--region",
