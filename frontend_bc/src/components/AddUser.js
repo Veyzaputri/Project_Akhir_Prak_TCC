@@ -16,7 +16,11 @@ function AddUser() {
                 username,
                 password,
               
-            });
+            },{
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
             navigate("/");
         } catch (error) {
             console.log(error);
