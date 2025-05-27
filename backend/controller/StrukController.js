@@ -10,7 +10,7 @@ export const getAllStruk = async (req, res) => {
       include: [
         {
           model: Pasien,
-          as:pasien,
+          as: "pasien",
           attributes: ["nama"],
         },
         {
