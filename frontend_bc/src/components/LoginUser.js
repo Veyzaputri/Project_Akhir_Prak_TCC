@@ -16,7 +16,7 @@ function LoginUser() {
       const response = await API.post('/login', {
         username,
         password
-      });
+      },{withCredentials: true});
       localStorage.setItem("accessToken", response.data.accessToken);
 
       // Redirect ke dashboard
