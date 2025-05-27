@@ -1,17 +1,4 @@
 steps:
-  # Step 1: Install npm dependencies
-  - name: 'node:20'
-    dir: 'frontend_bc'
-    entrypoint: 'npm'
-    args: ['install']
-
-  # Step 2: Build React app (hasilnya di folder build/)
-  - name: 'node:20'
-    dir: 'frontend_bc'
-    entrypoint: 'npm'
-    args: ['run', 'build']
-
-  # Step 3: Deploy ke Google App Engine
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     args:
