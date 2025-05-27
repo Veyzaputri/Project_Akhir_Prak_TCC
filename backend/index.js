@@ -12,6 +12,7 @@ import sequelize from "./config/Database.js";
 
 dotenv.config();
 const app = express();
+app.set("view engine", "ejs");
 app.use(cookieParser());
 const corsOptions = {
   origin: 'https://final-project-prak-tcc-dot-e-13-450704.uc.r.appspot.com',
@@ -25,6 +26,7 @@ app.options("*", cors(corsOptions)); // handle preflight
 
 
 app.use(express.json());
+app.get("/", (req, res) => res.render("index"));
 app.use(UserRoute);
 app.use(PasienRoute);
 app.use(DokterRoute);
