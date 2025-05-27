@@ -13,7 +13,7 @@ import sequelize from "./config/Database.js";
 dotenv.config();
 const app = express();
 app.use(cookieParser());
-app.use(cors({ credentials:true,origin:'https://final-project-prak-tcc-dot-e-13-450704.uc.r.appspot.com', methods: ["GET", "POST", "PUT", "DELETE"], }));
+app.use(cors({ credentials:true,origin:'https://final-project-prak-tcc-dot-e-13-450704.uc.r.appspot.com', methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], }));
 
 
 
