@@ -13,7 +13,14 @@ import sequelize from "./config/Database.js";
 dotenv.config();
 const app = express();
 app.use(cookieParser());
-app.use(cors({ credentials:true,origin:'https://final-project-prak-tcc-dot-e-13-450704.uc.r.appspot.com', methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], }));
+const corsOptions = {
+  origin: 'https://final-project-prak-tcc-dot-e-13-450704.uc.r.appspot.com',
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+};
+
+app.use(cors(corsOptions)); // letakkan sebelum routes
+app.options("*", cors(corsOptions)); // handle preflight
 
 
 
