@@ -2,16 +2,16 @@ steps:
  # Ngambil data env yg disimpen di cloud storage pake gsuri
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "${_ENV}", ".env"]
-  # Membuat image dengan perintah "cloud build -t gcr.io/$PROJECT_ID/backend ."
+  # Membuat image dengan perintah "cloud build -t gcr.io/$PROJECT_ID/final-project-prak-tcc ."
   # Project ID akan secara otomatis terisi ketika melakukan deploy di project yg dipilih
   - name: "gcr.io/cloud-builders/docker"
     dir: "backend"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/final_project_prak_tcc", "."]
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/final-project-prak-tcc", "."]
 
   # Meng-upload/push image yg telah dibuat ke Artifact Registry
   # Pada bagian ini, dijalankan perintah "docker push 'gcr.io/$PROJECT_ID/tcc-be'"
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/final_project_prak_tcc"]
+    args: ["push", "gcr.io/$PROJECT_ID/final-project-prak-tcc"]
 
   # Melakukan deploy ke cloud run menggunakan image yg telah di-upload/push pada langkah sebelumnya
   # Pada bagian ini, dijalankan perintah sebagai berikut.
@@ -34,9 +34,9 @@ steps:
       [
         "run",
         "deploy",
-        "final_project_prak_tcc",
+        "final-project-prak-tcc",
         "--image",
-        "gcr.io/$PROJECT_ID/final_project_prak_tcc",
+        "gcr.io/$PROJECT_ID/final-project-prak-tcc",
         "--timeout",
         "1000s",
         "--port",
