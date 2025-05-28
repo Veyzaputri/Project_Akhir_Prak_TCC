@@ -41,6 +41,7 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 app.use(express.json());
+app.get("/", (req, res) => res.render("index"));
 app.use(UserRoute);
 app.use(PasienRoute);
 app.use(DokterRoute);
