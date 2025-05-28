@@ -12,6 +12,7 @@ import sequelize from "./config/Database.js";
 
 dotenv.config();
 const app = express();
+app.set("view engine", "ejs");
 
 // ✅ Middleware manual untuk CORS & preflight
 app.use((req, res, next) => {
