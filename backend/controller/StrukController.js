@@ -20,6 +20,7 @@ export const getAllStruk = async (req, res) => {
         },
         {
           model: Periksa,
+          as: "periksa",
           attributes: ["tanggal_periksa", "biaya_periksa"],
         },
       ],
