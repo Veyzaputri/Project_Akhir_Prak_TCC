@@ -15,6 +15,7 @@ export const getAllStruk = async (req, res) => {
         },
         {
           model: Obat,
+          as: "obat",
           attributes: ["nama_obat", "harga"],
         },
         {
